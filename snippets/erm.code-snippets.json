@@ -1,0 +1,34 @@
+{
+  "Trigger skeleton": {
+    "prefix": "erm-trigger",
+    "body": [
+      "ZVSE",
+      "* Trigger: ${1:PI} (Player Interaction / пример)",
+      "!?${1:PI};",
+      "!!CM:0; * пример команды",
+      ""
+    ],
+    "description": "Минимальный триггер"
+  },
+  "Function (FU) skeleton": {
+    "prefix": "erm-fu",
+    "body": [
+      "* Function",
+      "FU(${1:100});",
+      "!!VR v1:S${2:=10};",
+      "!!IF&v1>0:; ${3:do something}",
+      "!!IF:;  * endif",
+      ""
+    ],
+    "description": "Шаблон функции FU"
+  },
+  "DO loop": {
+    "prefix": "erm-do",
+    "body": [
+      "* Iterate: DO receiver",
+      "!!DO${1:WZ}/${2:start}/${3:end}/${4:step}/:${5:procFU};",
+      ""
+    ],
+    "description": "Цикл DO по диапазону"
+  }
+}

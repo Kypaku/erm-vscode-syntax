@@ -1,0 +1,127 @@
+{
+  "scopeName": "source.erm",
+  "name": "ERM",
+  "fileTypes": ["erm", "ers", "erw"],
+  "patterns": [
+    { "include": "#header" },
+    { "include": "#comment" },
+    { "include": "#string" },
+    { "include": "#number" },
+    { "include": "#trigger" },
+    { "include": "#command" },
+    { "include": "#receiver" },
+    { "include": "#variables" },
+    { "include": "#functionCall" },
+    { "include": "#control" },
+    { "include": "#punct" }
+  ],
+  "repository": {
+    "header": {
+      "patterns": [
+        {
+          "name": "keyword.declaration.header.erm",
+          "match": "^\\s*(ZVSE)\\b"
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.semicolon.erm",
+          "match": ";.*$"
+        },
+        {
+          "name": "comment.line.asterisk.erm",
+          "match": "\\*.*$"
+        }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.erm",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            { "name": "constant.character.escape.erm", "match": "\\\\." }
+          ]
+        }
+      ]
+    },
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.integer.erm",
+          "match": "(?<![A-Za-z_])[-+]?[0-9]+\\b"
+        }
+      ]
+    },
+    "trigger": {
+      "patterns": [
+        {
+          "name": "keyword.control.trigger.erm",
+          "match": "^\\s*!\\?[A-Z]{2}\\b.*$"
+        }
+      ]
+    },
+    "command": {
+      "patterns": [
+        {
+          "name": "keyword.control.command.erm",
+          "match": "^\\s*!![A-Z]{2}\\b"
+        }
+      ]
+    },
+    "receiver": {
+      "patterns": [
+        {
+          "name": "support.class.receiver.erm",
+          "match": "\\b(HE|FU|UN|DO|IF|VR|SN|CM|TR|MM|MA|OW|OB|DL|PI|PO|BM|BA|MO|CA|OW|LE|MR|SE|TI|BA|BN|CO|EG|ER|GE|IF|MF|MU|PA|PC|PD|PO|SM|TH|UN|VR|WZ)\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.erm",
+          "match": "\\b([vyeitrwzfdgqsplmrcbnxhk][0-9]{1,5})\\b"
+        },
+        {
+          "name": "variable.language.flag.erm",
+          "match": "\\bf[0-9]{1,5}\\b"
+        }
+      ]
+    },
+    "functionCall": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.erm",
+          "match": "\\bFU\\s*\\((?:-?[0-9]+|[vyeitrwz][0-9]{1,5})\\)"
+        }
+      ]
+    },
+    "control": {
+      "patterns": [
+        {
+          "name": "keyword.control.erm",
+          "match": "\\b(IF|ELSE|ENDIF|LOOP|END)\\b"
+        },
+        {
+          "name": "keyword.operator.assignment.erm",
+          "match": "[:=]{1,2}"
+        },
+        {
+          "name": "keyword.operator.logical.erm",
+          "match": "(\\&|\\||\\^|~|<>|><|<=|>=|==|!=|<|>)"
+        }
+      ]
+    },
+    "punct": {
+      "patterns": [
+        { "name": "punctuation.separator.param.erm", "match": "[:/;]" },
+        { "name": "punctuation.separator.comma.erm", "match": "," },
+        { "name": "punctuation.section.parens.erm", "match": "[()]" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "vscode-erm",
+  "displayName": "ERM (WoG/Era) Syntax",
+  "description": "Подсветка синтаксиса и сниппеты для ERM-скриптов Heroes 3 WoG/Era",
+  "version": "0.0.1",
+  "publisher": "kypaku",
+  "engines": { "vscode": "^1.105.0" },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "erm",
+        "aliases": ["ERM", "erm"],
+        "extensions": [".erm", ".ers", ".erw"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "erm",
+        "scopeName": "source.erm",
+        "path": "./syntaxes/erm.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "erm",
+        "path": "./snippets/erm.code-snippets.json"
+      }
+    ]
+  },
+  "activationEvents": ["onLanguage:erm"],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.105.0",
+    "typescript": "^5.6.3",
+    "vsce": "^2.15.0",
+    "vscode-test": "^1.6.0"
+  }
+}
