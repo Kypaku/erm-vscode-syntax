@@ -1,65 +1,70 @@
-# kypaku-erm-syntax README
+# ERM (WoG/Era) Syntax for VS Code
 
-This is the README for your extension "kypaku-erm-syntax". After writing up a brief description, we recommend including the following sections.
+Расширение добавляет полноценную подсветку синтаксиса, автозакрытие скобок и набор сниппетов для ERM‑скриптов Heroes of Might and Magic III (WoG/Era). Оно построено поверх TextMate грамматики и автоматически активируется для проектов с файлами `*.erm`, `*.ers` и `*.erw`.
 
-## Features
+## Возможности
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Точные правила подсветки для заголовка `ZVSE`, триггеров `!?XX`, команд `!!XX`, получателей (`HE`, `VR`, `DO`, `SN`, `CM` и десятки других), а также переменных `v1`, `f42`, `y12345` и т.д.
+- Распознавание чисел, строк, логических операторов и служебных символов, что делает сложные конструкции ERM легче читаемыми.
+- Поддержка линейных (`*`) и точечных (`;`) комментариев, а также авто‑/обрамления скобок `()[]{}` и кавычек согласно `language-configuration.json`.
+- Сниппеты для часто повторяющихся конструкций ERM: заготовка триггера, функции `FU` и цикла `DO`.
 
-For example if there is an image subfolder under your extension project workspace:
+## Быстрый старт
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Установите расширение через VSIX или marketplace (как только публикация будет доступна).
+2. Откройте любой ERM‑файл. VS Code переключится на язык `ERM`, и расширение активируется (событие `onLanguage:erm`).
+3. Наберите `erm-trigger`, `erm-fu` или `erm-do`, чтобы вставить готовый шаблон.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Каталог сниппетов
 
-## Requirements
+| Префикс      | Назначение                  | Что вставляет |
+|--------------|-----------------------------|---------------|
+| `erm-trigger`| Минимальный триггер         | `ZVSE`, шапка `!?PI`, пример команды `CM` |
+| `erm-fu`     | Шаблон функции `FU`          | Объявление `FU(100)`, пример `VR`, `IF` блок |
+| `erm-do`     | Цикл `DO` по диапазону       | `!!DOx/start/end/step/:proc` |
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Каждый сниппет содержит комментарии-подсказки и табстопы для быстрого заполнения параметров.
 
-## Extension Settings
+## Подсветка и грамматика
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Ниже приведен пример кода, демонстрирующий выделение ключевых элементов:
 
-For example:
+```erm
+ZVSE
+* Player interaction trigger
+!?PI;
+!!IF&v1>0:;
+!!VRv2:S1;
+!!DOWZ/1/6/1/:101;
+"Action: player ${v1}"
+;
+```
 
-This extension contributes the following settings:
+Грамматика (`syntaxes/erm.tmLanguage.json`) выделяет:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- `keyword.declaration.header.erm` — шапку `ZVSE`.
+- `keyword.control.trigger.erm` — строки `!?XX`.
+- `keyword.control.command.erm` — команды `!!XX`.
+- `support.class.receiver.erm` — получателей вроде `HE`, `VR`, `CM`.
+- `variable.other.erm` — переменные `v`, `y`, `e`, `i`, `t`, `r`, `w`, `z`, `f`, `d`, `g`, `q`, `s`, `p`, `l`, `m`, `r`, `c`, `b`, `n`, `x`, `h`, `k` с индексами.
+- `keyword.operator.*` — операторы `:`, `=`, `&`, `|`, `<=`, `>=` и другие.
 
-## Known Issues
+## Разработка и сборка
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+В проекте уже настроен TypeScript и типы VS Code 1.105. Используйте npm‑скрипты:
+
+- `npm run compile` — одноразовая сборка в `out/`.
+- `npm run watch` — инкрементальная сборка при разработке.
+- `npm run package` — упаковка VSIX через `vsce`.
+
+Перед публикацией выполните `npm install`, затем `npm run vscode:prepublish`.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
+- Первая версия: грамматика ERM, конфигурация языка, набор начальных сниппетов и события активации языка.
 
-Initial release of ...
+## Обратная связь
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Сообщайте об ошибках и идеях в issues репозитория `Kypaku/erm-vscode-syntax`. Приветствуются предложения по дополнению грамматики новыми получателями и командам ERM.
